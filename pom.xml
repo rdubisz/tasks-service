@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>net.rd</groupId>
+    <artifactId>tasks-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>tasks : parent</name>
+    <description>Tasks parent</description>
+    <url>https://github.com/rdubisz/tasks-service</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>17</java.version>
+        <!-- Maven plugins -->
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <maven-download-plugin.version>1.6.7</maven-download-plugin.version>
+        <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
+        <!-- <maven-surefire-plugin.version>3.0.0-M8</maven-surefire-plugin.version>-->
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-docker-plugin.version>0.39.0</maven-docker-plugin.version>
+        <!-- Libraries -->
+        <logback.version>1.4.5</logback.version>
+        <slf4j.version>2.0.6</slf4j.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <flyway.version>9.12.0</flyway.version>
+        <h2.version>2.1.214</h2.version>
+        <mariadb-connector.version>3.1.2</mariadb-connector.version>
+        <commons-dbcp2.version>2.9.0</commons-dbcp2.version>
+        <httpclient.version>5.2.1</httpclient.version>
+        <!-- Spring -->
+        <spring-boot.version>3.0.2</spring-boot.version>
+        <spring-security.version>6.0.1</spring-security.version>
+
+        <!-- Test dependencies -->
+        <junit.version>5.9.2</junit.version>
+        <junit-plaform.version>1.9.2</junit-plaform.version>
+        <assertj.version>3.24.2</assertj.version>
+        <mockito.version>5.0.0</mockito.version>
+        <testcontainers.version>1.17.6</testcontainers.version>
+
+        <!-- Docker variables -->
+        <docker.app.dir>/opt/app</docker.app.dir>
+        <docker.autoCreateCustomNetworks>true</docker.autoCreateCustomNetworks>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>maven_central</id>
+            <name>Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
+    <scm>
+        <connection>scm:git:https://github.com/rdubisz/tasks-service.git</connection>
+        <url>https://github.com/rdubisz/tasks-service</url>
+    </scm>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>maven_central</id>
+            <name>Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <modules>
+        <module>tasks-service</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mariadb.jdbc</groupId>
+                <artifactId>mariadb-java-client</artifactId>
+                <version>${mariadb-connector.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
+
+            <!-- Test dependencies -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-runner</artifactId>
+                <version>${junit-plaform.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${maven-antrun-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <parallel>classes</parallel>
+                        <threadCount>5</threadCount>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.junit.jupiter</groupId>
+                            <artifactId>junit-jupiter-engine</artifactId>
+                            <version>${junit.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <!--            <plugin>-->
+                <!--                <groupId>org.apache.maven.plugins</groupId>-->
+                <!--                <artifactId>maven-failsafe-plugin</artifactId>-->
+                <!--                <version>${maven-surefire-plugin.version}</version>-->
+                <!--            </plugin>-->
+                <!--            <plugin>-->
+                <!--                <groupId>org.apache.maven.plugins</groupId>-->
+                <!--                <artifactId>maven-surefire-report-plugin</artifactId>-->
+                <!--                <version>${maven-surefire-plugin.version}</version>-->
+                <!--            </plugin>-->
+                <plugin>
+                    <groupId>com.googlecode.maven-download-plugin</groupId>
+                    <artifactId>download-maven-plugin</artifactId>
+                    <version>${maven-download-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${maven-docker-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
