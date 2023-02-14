@@ -12,7 +12,7 @@ Simple Spring Boot service allowing REST access to tasks
 ## Building
 
 ```
-../mvnw clean install
+./mvnw clean install
 docker-compose -f stack.yml build
 ```
 
